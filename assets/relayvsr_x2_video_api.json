@@ -1,0 +1,149 @@
+{
+  "1": {
+    "inputs": {
+      "file": "0036.mp4"
+    },
+    "class_type": "LoadVideo",
+    "_meta": {
+      "title": "加载视频"
+    }
+  },
+  "2": {
+    "inputs": {
+      "video": [
+        "1",
+        0
+      ]
+    },
+    "class_type": "GetVideoComponents",
+    "_meta": {
+      "title": "获取视频元素"
+    }
+  },
+  "4": {
+    "inputs": {
+      "unet_name": "relayvsr\\relayvsr_x2_lightx2v_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "UNet加载器"
+    }
+  },
+  "5": {
+    "inputs": {
+      "model": [
+        "4",
+        0
+      ],
+      "images": [
+        "2",
+        0
+      ]
+    },
+    "class_type": "RelayVSRConditioning",
+    "_meta": {
+      "title": "RelayVSRConditioning"
+    }
+  },
+  "6": {
+    "inputs": {
+      "seed": 0,
+      "steps": 1,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "4",
+        0
+      ],
+      "positive": [
+        "5",
+        0
+      ],
+      "negative": [
+        "5",
+        0
+      ],
+      "latent_image": [
+        "5",
+        1
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "K采样器"
+    }
+  },
+  "7": {
+    "inputs": {
+      "vae_name": "relayvsr_flash_vae_x2_fp32.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "加载VAE"
+    }
+  },
+  "104": {
+    "inputs": {
+      "detail": 1,
+      "vae": [
+        "7",
+        0
+      ],
+      "samples": [
+        "6",
+        0
+      ],
+      "images": [
+        "2",
+        0
+      ]
+    },
+    "class_type": "VSRDecode",
+    "_meta": {
+      "title": "VSR Decode"
+    }
+  },
+  "105": {
+    "inputs": {
+      "fps": [
+        "2",
+        2
+      ],
+      "bit_depth": "auto",
+      "color_space": "sRGB",
+      "chroma_subsampling": "auto",
+      "codec": "none",
+      "images": [
+        "104",
+        0
+      ],
+      "audio": [
+        "2",
+        1
+      ]
+    },
+    "class_type": "CreateVideo",
+    "_meta": {
+      "title": "创建视频"
+    }
+  },
+  "106": {
+    "inputs": {
+      "filename_prefix": "video/ComfyUI",
+      "format": "auto",
+      "format.codec": "auto",
+      "codec": "auto",
+      "video": [
+        "105",
+        0
+      ]
+    },
+    "class_type": "SaveVideo",
+    "_meta": {
+      "title": "保存视频"
+    }
+  }
+}
