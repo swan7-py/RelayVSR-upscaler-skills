@@ -9,7 +9,7 @@ upscale_video.py —— 本地 ComfyUI + RelayVSR x2 视频放大
   - 末段从原片直接取音轨（-c copy），避免重编码
 
 用法：
-  python upscale_video.py --src "<源视频>" --dst "<输出视频>" [--seg 118] [--detail 0.8]
+  python upscale_video.py --src "<源视频>" --dst "<输出视频>" [--seg 118] [--detail 0.7]
 
 前置：本地 ComfyUI 已在 127.0.0.1:8188 运行；RelayVSR 模型与 VAE 已就位。
 """
@@ -151,7 +151,7 @@ def main():
     ap.add_argument("--indir", default=DEFAULT_INDIR, help="ComfyUI input 目录")
     ap.add_argument("--outdir", default=DEFAULT_OUTDIR, help="ComfyUI output/upscale 目录")
     ap.add_argument("--seg", type=int, default=118, help="每段帧数")
-    ap.add_argument("--detail", type=float, default=0.8, help="RelayVSR detail 参数")
+    ap.add_argument("--detail", type=float, default=0.7, help="RelayVSR detail 参数")
     ap.add_argument("--fps", type=float, default=0.0, help="源帧率，0=自动探测")
     ap.add_argument("--tag", default="RELAYX2", help="文件/队列标签")
     ap.add_argument("--unet", default=UNET_X2, help="UNET 文件名（含子目录）")
